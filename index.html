@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopSight Zambia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f5;
+    }
+ .hidden {
+      display: none!important;
+    }
+
+    /* Login Modal */
+    #loginModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+ .login-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 350px;
+    }
+ .login-box h2 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+ .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+ .login-box button {
+      width: 100%;
+      padding: 12px;
+      background: #34495e;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+ .close-login {
+      background: #6c757d!important;
+    }
+
+    /* Header */
+    header {
+      background: #34495e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    header h1 {
+      margin-bottom: 10px;
+    }
+ .header-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    #searchBar {
+      padding: 8px 15px;
+      border-radius: 20px;
+      border: none;
+      width: 60%;
+      max-width: 250px;
+      font-size: 14px;
+    }
+ .header-btn {
+      background: #5d6d7e;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      position: relative;
+    }
+    #cartBtn span {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Admin Panel */
+    #adminPanel {
+      background: white;
+      padding: 20px;
+      margin: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    #adminPanel h3 {
+      margin-bottom: 15px;
+      font-size: 22px;
+    }
+    #adminPanel input, #adminPanel textarea, #adminPanel select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: inherit;
+    }
+    #adminPanel textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    #adminPanel button {
+      width: 100%;
+      padding: 12px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #productImage {
+      padding: 9px!important;
+    }
+
+    /* Category Filter Pills */
+ .category-filters {
+      padding: 0 15px 10px 15px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+    }
+ .cat-pill {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: white;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+ .cat-pill.active {
+      background: #34495e;
+      color: white;
+      border-color: #34495e;
+    }
+
+    /* Product Grid - Always 2x2 */
+    #productGrid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      padding: 0 15px 80px 15px;
+    }
+ .product {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+ .product img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+ .product-info {
+      padding: 10px;
+    }
+ .product-info h4 {
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: #333;
+    }
+ .product-desc {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 5px;
+      height: 30px;
+      overflow: hidden;
+    }
+ .product-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #27ae60;
+    }
+ .product-stock {
+      font-size: 11px;
+      color: #888;
+      margin: 4px 0;
+    }
+ .product-btn {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      margin-top: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+ .whatsapp-btn {
+      background: #25D366;
+      color: white;
+    }
+ .delete-btn {
+      background: #e74c3c;
+      color: white;
+      margin-top: 5px;
+    }
+
+    /* Admin Floating Button */
+    #adminBtn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #34495e;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      cursor: pointer;
+      font-size: 14px;
+      z-index: 50;
+    }
+
+    #emptyState {
+      text-align: center;
+      color: #888;
+      padding: 40px 20px;
+      grid-column: 1 / -1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="hidden">
+    <div class="login-box">
+      <h2>Admin Login</h2>
+      <input type="password" id="passwordInput" placeholder="Enter password">
+      <button onclick="login()">Login</button>
+      <button class="close-login" onclick="closeLogin()">Cancel</button>
+      <p id="loginError" style="color:red; text-align:center; margin-top:10px;"></p>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="mainApp">
+    <header>
+      <h1>ShopSight Zambia</h1>
+      <div class="header-actions">
+        <input type="text" id="searchBar" placeholder="Search products..." onkeyup="renderProducts()">
+        <button id="logoutBtn" class="header-btn hidden" onclick="logout()">Logout</button>
+        <button id="cartBtn" class="header-btn">🛒 Cart <span id="cartCount">0</span></button>
+      </div>
+    </header>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="hidden">
+      <h3>Admin Panel</h3>
+      <input type="text" id="productName" placeholder="Product Name">
+      <input type="number" id="productPrice" placeholder="Price ZMW">
+      <textarea id="productDesc" placeholder="Product Description"></textarea>
+      <label for="productImage">Product Image</label>
+      <input type="file" id="productImage" accept="image/*">
+      <select id="productCategory">
+        <option value="Home & Living">Home & Living</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Other">Other</option>
+      </select>
+      <input type="number" id="productStock" placeholder="Stock Qty">
+      <button onclick="addProduct()">Add Product to Store</button>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-filters" id="categoryFilters">
+      <button class="cat-pill active" onclick="filterCategory('All')">All</button>
+      <button class="cat-pill" onclick="filterCategory('Electronics')">Electronics</button>
+      <button class="cat-pill" onclick="filterCategory('Fashion')">Fashion</button>
+      <button class="cat-pill" onclick="filterCategory('Home & Living')">Home</button>
+      <button class="cat-pill" onclick="filterCategory('Other')">Other</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="productGrid">
+      <div id="emptyState">No products yet.</div>
+    </div>
+
+    <!-- Admin Floating Button -->
+    <button id="adminBtn" onclick="showLogin()">Admin</button>
+  </div>
+
+  <script>
+    const PASSWORD = 'zambia123';
+    const WHATSAPP_NUMBER = '260978101177'; // CHANGE THIS TO YOUR NUMBER
+    let products = JSON.parse(localStorage.getItem('products') || '[]');
+    let isAdmin = false;
+    let currentCategory = 'All';
+
+    function showLogin() {
+      document.getElementById('loginModal').classList.remove('hidden');
+    }
+
+    function closeLogin() {
+      document.getElementById('loginModal').classList.add('hidden');
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('loginError').innerText = '';
+    }
+
+    function login() {
+      const pass = document.getElementById('passwordInput').value;
+      if (pass === PASSWORD) {
+        isAdmin = true;
+        document.getElementById('loginModal').classList.add('hidden');
+        document.getElementById('adminPanel').classList.remove('hidden');
+        document.getElementById('adminBtn').classList.add('hidden');
+        document.getElementById('logoutBtn').classList.remove('hidden');
+        renderProducts();
+        closeLogin();
+      } else {
+        document.getElementById('loginError').innerText = 'Wrong password';
+      }
+    }
+
+    function logout() {
+      isAdmin = false;
+      document.getElementById('adminPanel').classList.add('hidden');
+      document.getElementById('adminBtn').classList.remove('hidden');
+      document.getElementById('logoutBtn').classList.add('hidden');
+      renderProducts();
+    }
+
+    function addProduct() {
+      const name = document.getElementById('productName').value;
+      const price = document.getElementById('productPrice').value;
+      const desc = document.getElementById('productDesc').value;
+      const category = document.getElementById('productCategory').value;
+      const stock = document.getElementById('productStock').value;
+      const imageFile = document.getElementById('productImage').files[0];
+
+      if (!name ||!price ||!desc ||!stock ||!imageFile) {
+        alert('Fill all fields and select an image');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        products.push({
+          name: name,
+          price: price,
+          desc: desc,
+          category: category,
+          stock: stock,
+          image: e.target.result
+        });
+        localStorage.setItem('products', JSON.stringify(products));
+        renderProducts();
+        // Clear form
+        document.getElementById('productName').value = '';
+        document.getElementById('productPrice').value = '';
+        document.getElementById('productDesc').value = '';
+        document.getElementById('productStock').value = '';
+        document.getElementById('productImage').value = '';
+      };
+      reader.readAsDataURL(imageFile);
+    }
+
+    function deleteProduct(index) {
+      if (confirm('Delete this product?')) {
+        products.splice(index, 1);
+        localStorage.setItem('products', JSON.stringify(products));
+        renderProducts();
+      }
+    }
+
+    function orderWhatsApp(name, price) {
+      const message = `Hi! I want to order: ${name} - K${price} from ShopSight Zambia`;
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+
+      let filtered = products.filter(p => {
+        const matchCategory = currentCategory === 'All' || p.category === currentCategory;
+        const matchSearch = p.name.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm);
+        return matchCategory && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div id="emptyState">No products found.</div>';
+        return;
+      }
+
+      grid.innerHTML = '';
+      filtered.forEach((p) => {
+        const realIndex = products.indexOf(p);
+        grid.innerHTML += `
+          <div class="product">
+            <img src="${p.image}" alt="${p.name}">
+            <div class="product-info">
+              <h4>${p.name}</h4>
+              <div class="product-desc">${p.desc}</div>
+              <div class="product-price">K${p.price}</div>
+              <div class="product-stock">Stock: ${p.stock}</div>
+              <button class="product-btn whatsapp-btn" onclick="orderWhatsApp('${p.name}', '${p.price}')">Order on WhatsApp</button>
+              ${isAdmin? `<button class="product-btn delete-btn" onclick="deleteProduct(${realIndex})">Delete</button>` : ''}
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // Load products on page open
+    window.onload = function() {
+      renderProducts();
+    }
+  </script>
+
+</body>
+</html>
